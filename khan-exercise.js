@@ -206,6 +206,9 @@ var Khan = (function() {
 	urlBase = typeof urlBaseOverride !== "undefined" ? urlBaseOverride :
 		testMode ? "../" : "/khan-exercises/",
 
+	decor = typeof decorOverride !== "undefined" ? decorOverride : "iBookWidget",
+
+
 	lastFocusedSolutionInput = null,
 
 	issueError = "Communication with GitHub isn't working. Please file "
@@ -241,12 +244,12 @@ var Khan = (function() {
 		(function(){
 			var link = document.createElement("link");
 			link.rel = "stylesheet";
-			link.href = urlBase + "css/khan-site.css";
+			link.href = urlBase + "decor/" + decor + "/css/site.css";
 			document.getElementsByTagName('head')[0].appendChild(link);
 
 			link = document.createElement("link");
 			link.rel = "stylesheet";
-			link.href = urlBase + "css/khan-exercise.css";
+			link.href = urlBase + "decor/" + decor + "/css/exercise.css";
 			document.getElementsByTagName('head')[0].appendChild(link);
 		})();
 	}
@@ -257,6 +260,7 @@ var Khan = (function() {
 
 		// So modules can use file paths properly
 		urlBase: urlBase,
+		decor: decor,
 
 		moduleDependencies: {
 			"math": [ {
@@ -2941,12 +2945,12 @@ var Khan = (function() {
 				// Inject the site markup, if it doesn't exist
 				if ( jQuery("#answer_area").length === 0 ) {
 					jQuery.ajax( {
-						url: urlBase + "exercises/khan-site.html",
+						url: urlBase + "decor/" + decor + "/site.html",
 						dataType: "html",
 						success: function( html ) {
 
 							jQuery.ajax( {
-								url: urlBase + "exercises/khan-exercise.html",
+								url: urlBase + "decor/" + decor + "/exercise.html",
 								dataType: "text",
 								success: function( htmlExercise ) {
 
